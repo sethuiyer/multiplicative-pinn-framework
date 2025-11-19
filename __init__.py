@@ -1,0 +1,3 @@
+"""
+Multiplicative PINN Framework
+"""
