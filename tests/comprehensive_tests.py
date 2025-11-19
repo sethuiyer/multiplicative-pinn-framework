@@ -10,7 +10,8 @@ from multiplicative_pinn_framework.core.multi_constraint_graph import (
     MultiConstraintGraph, MonotonicityConstraint, LipschitzConstraint,
     PositivityConstraint, ConvexityConstraint, run_multi_constraint_demo
 )
-from multiplicative_pinn_framework.core.pinn_multiplicative_constraints import MultiplicativeConstraintLayers, PoissonEquationConstraint, HeatEquationConstraint,
+from multiplicative_pinn_framework.core.pinn_multiplicative_constraints import (
+    MultiplicativeConstraintLayer, PoissonEquationConstraint, HeatEquationConstraint,
     solve_poisson_1d, solve_heat_1d
 )
 

@@ -85,8 +85,7 @@ def compute_navier_stokes_residual_divfree(model, coords):
     # Extract partial derivatives
     u_t = grad_u[:, 0:1]  # ∂u/∂t
     u_x = grad_u[:, 1:2]  # ∂u/∂x
-    u_y = grad_u[:, 2:2]  # ∂u/∂y  - Fix indexing
-    u_y = grad_u[:, 2:3]  # ∂u/∂y  - Correct indexing
+    u_y = grad_u[:, 2:3]  # ∂u/∂y
     
     v_t = grad_v[:, 0:1]  # ∂v/∂t
     v_x = grad_v[:, 1:2]  # ∂v/∂x

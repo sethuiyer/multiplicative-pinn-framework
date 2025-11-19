@@ -6,7 +6,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 import matplotlib.pyplot as plt
-from large_scale_simulation import TrainedNavierStokes2D
+from multiplicative_pinn_framework.examples.large_scale_simulation import TrainedNavierStokes2D
 
 
 def create_model():

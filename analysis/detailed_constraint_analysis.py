@@ -5,10 +5,10 @@ Measuring how well Sethu Iyer's multiplicative framework enforces constraints
 import torch
 import torch.nn as nn
 import numpy as np
-from multi_constraint_graph import (
+from multiplicative_pinn_framework.core.multi_constraint_graph import (
     MonotonicityConstraint, LipschitzConstraint, PositivityConstraint, ConvexityConstraint
 )
-from pinn_multiplicative_constraints import PoissonEquationConstraint
+from multiplicative_pinn_framework.core.pinn_multiplicative_constraints import PoissonEquationConstraint
 
 
 def measure_constraint_satisfaction(model, constraint, test_data, input_data=None):
