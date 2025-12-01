@@ -2,7 +2,7 @@
 
 **A Research Framework for Solving PDEs with Multiplicative Constraints**
 
-This package implements the "Multiplicative Axis Framework" developed by ShunyaBar Labs. It provides a novel method for enforcing physical constraints in deep learning models using prime-based Euler gates and exponential barriers, rather than traditional additive penalties.
+This package implements the Multiplicative Axis Framework for physics-informed neural networks (PINNs). It provides a method for enforcing physical constraints in deep learning models using prime-based Euler gates and exponential barriers, rather than traditional additive penalties.
 
 ## Core Concepts
 
