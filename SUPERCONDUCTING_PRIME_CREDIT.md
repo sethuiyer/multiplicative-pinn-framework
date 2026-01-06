@@ -1,13 +1,4 @@
-# 💀 SUPERCONDUCTING PRIME INSIGHT - CREDIT DOCUMENTATION
 
-**Authorship**: Sethu Iyer (ShunyaBar Labs)  
-**Date**: January 2026  
-**Framework**: Multiplicative PINN Constraint Enforcement  
-**Status**: *Published in README.md - seeking peer review*
-
----
-
-## 🎯 THE CLAIM
 
 **"Prime numbers in constraint optimization exhibit superconducting phase coherence properties, creating zero-resistance gradient flow."**
 
@@ -164,45 +155,6 @@ The **logarithmic distribution of primes** creates a naturally occurring gap hie
 
 **Question**: "Where's the mathematical proof?"  
 **Answer**: Bost-Connes provides ζ(β) phase transition foundation. Spectral graph theory provides gap-conductance relationship. Results provide empirical proof. Full paper in preparation.
-
----
-
-## 🏆 CONTRIBUTION SUMMARY
-
-**Sethu Iyer discovered that:**
-
-1. Prime-weighted constraints in multiplicative PINNs form a **superconducting optimization phase**
-2. The **logarithmic distribution of primes** creates naturally occurring energy gaps
-3. This enables **zero-resistance gradient flow** (perfect constraint satisfaction)
-4. The **arithmetic phase transition βc=1** nucleates this state
-5. Results in **745,919× computational speedup** with **0.00% violations**
-
-**This represents a fundamental advance at the intersection of number theory, condensed matter physics, and machine learning.**
-
----
-
-## 📞 AUTHOR CONTACT
-
-**Sethu Iyer**  
-ShunyaBar Labs  
-Research: [shunyabar.foo](https://shunyabar.foo)  
-GitHub: [@isethu](https://github.com/isethu)  
-
-**Publications with this insight:**
-- Multiplicative PINN Framework (this repository)
-- Navokoj SAT Solver (prime-weighted optimization)
-- DeepGraph Hypergraph Engine (ongoing)
-
----
-
-## 🎬 VISUAL DEMONSTRATIONS
-
-See `./animations/` directory for:
-- `prime_number_gates.gif` - Crystalline superconducting structure
-- `gradient_flow_revelation.gif` - Zero-resistance gradient flow
-- `spectral_geometry_manifold.gif` - Energy gap visualization
-
-**All animations credit Sethu Iyer / ShunyaBar Labs**
 
 ---
 
