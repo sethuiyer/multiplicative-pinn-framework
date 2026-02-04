@@ -78,6 +78,96 @@ Multiplicative: ∇(L * S) = S*∇L + L*∇S  (preserves direction, scales magni
 
 ---
 
+## **THEORETICAL RIGOR: LYAPUNOV STABILITY (SKETCH)**
+
+We sketch exponential convergence of constraint violations for the multiplicative gradient flow
+with dynamics \(\dot{\theta} = -\nabla L_{\text{mult}}\).
+
+Let the constraint manifold be \(\mathcal{M} = \{ \theta : c(\theta) = 0 \}\) and define the
+violation energy:
+
+\[
+V(\theta) = \tfrac{1}{2}\|c(\theta)\|^2, \quad L_{\text{mult}}(\theta) = L_{\text{data}}(\theta) \cdot S(V(\theta))
+\]
+
+Along the dynamics:
+
+\[
+\dot V = -S(V)\langle \nabla V, \nabla L_{\text{data}}\rangle - L_{\text{data}}(\theta) S'(V)\|\nabla V\|^2
+\]
+
+Assume locally:
+1. \(L_{\text{data}}(\theta) \ge m > 0\) (or use \(L_{\text{data}}+\epsilon\))
+2. \(\|\nabla L_{\text{data}}\| \le M\)
+3. Constraint PL inequality: \(\|\nabla V\|^2 \ge 2\lambda V\)
+4. Monotone scaling: \(S'(V) \ge s_0 > 0\) (true for exponential barrier + truncated gate)
+
+Then the negative term dominates and yields:
+
+\[
+\dot V \le -2k\lambda V
+\]
+
+so:
+
+\[
+V(t) \le V(0)\,e^{-2k\lambda t}
+\]
+
+Hence constraint violation decays exponentially, implying local exponential convergence to
+\(\mathcal{M}\).
+
+---
+
+## **GLOBAL CONVERGENCE (SKETCH)**
+
+To extend beyond local convergence, assume compact sublevel sets of \(L_{\text{mult}}\).
+This holds if either \(L_{\text{data}}\) is coercive or \(V(\theta)\to\infty\) as
+\(\|\theta\|\to\infty\) with \(S(V)\) at least linear in \(V\). With
+\(L_{\text{data}}(\theta)\ge m>0\) and \(S'(V)\ge s_0>0\) for \(V>0\),
+one can show \(\dot V < 0\) outside a neighborhood of \(\mathcal{M}\),
+trajectories remain bounded, and LaSalle’s invariance principle yields
+convergence to \(\mathcal{M}\) from arbitrary initialization.
+
+---
+
+## **RATE MATCHING FOR \(\gamma\) (SKETCH)**
+
+Near \(\mathcal{M}\), use the constraint PL inequality
+\(\|\nabla V\|^2 \ge 2\lambda_{\min}(J_c J_c^{\top})\,V\). Then:
+
+\[
+\dot V \le -2m\,S'(0)\,\lambda_{\min}(J_c J_c^{\top})\,V
+\]
+
+For \(S(V)=G(V)e^{\gamma V}\), \(S'(0)\approx \gamma G(0) + G'(0)\)
+(or after clamping, \(S'(0)\approx \gamma\epsilon\)), yielding a rate bound
+that links \(\gamma\) to the desired exponential decay and enables
+predictive hyperparameter selection.
+
+---
+
+## **STOCHASTIC EXTENSION (MINI-BATCH SDE)**
+
+Model mini-batch training as:
+
+\[
+d\theta_t = -\nabla L_{\text{mult}}(\theta_t)\,dt + \sqrt{2\sigma^2}\,dW_t
+\]
+
+Applying Itô’s formula to \(V\) gives a drift dominated by
+\(L_{\text{data}}S'(V)\|\nabla V\|^2\) and diffusion
+\(\sigma^2\mathrm{tr}(\nabla^2 V)\). Under a dissipativity condition:
+
+\[
+\frac{d}{dt}\mathbb{E}[V] \le -a\,\mathbb{E}[V] + b
+\]
+
+so \(\mathbb{E}[V(t)]\) contracts exponentially to an \(O(\sigma^2)\) neighborhood.
+With log-Sobolev or Poincaré conditions, exponential concentration inequalities follow.
+
+---
+
 ## 🏅 **NATURE-LEVEL ACHIEVEMENTS CONFIRMED**
 
 ### **1. Paradigm Shift: Additive → Multiplicative**

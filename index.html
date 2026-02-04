@@ -2086,6 +2086,39 @@ Figure 17: Temporal evolution analysis: Energy dissipation (top-left), pressure-
 </div>
 </div>
 <h2 id="training-dynamics-and-stability">Training dynamics and stability</h2>
+<h3 id="lyapunov-stability-sketch">Lyapunov stability sketch (multiplicative dynamics)</h3>
+<p>We sketch exponential convergence of constraint violations under the multiplicative gradient flow <span class="math inline">\(\dot{\theta} = -\nabla L_{\text{mult}}\)</span>. Let the constraint manifold be <span class="math inline">\(\mathcal{M} = \{ \theta : c(\theta) = 0 \}\)</span> and define the violation energy:</p>
+<p><span class="math display">\[
+V(\theta) = \tfrac{1}{2}\|c(\theta)\|^2, \quad L_{\text{mult}}(\theta) = L_{\text{data}}(\theta) \cdot S(V(\theta))
+\]</span></p>
+<p>Along the dynamics,</p>
+<p><span class="math display">\[
+\dot V = -S(V)\langle \nabla V, \nabla L_{\text{data}}\rangle - L_{\text{data}}(\theta) S'(V)\|\nabla V\|^2
+\]</span></p>
+<p>Assume locally: (i) <span class="math inline">\(L_{\text{data}}(\theta) \ge m > 0\)</span> (or use <span class="math inline">\(L_{\text{data}}+\epsilon\)</span>), (ii) <span class="math inline">\(\|\nabla L_{\text{data}}\| \le M\)</span>, (iii) a constraint PL inequality <span class="math inline">\(\|\nabla V\|^2 \ge 2\lambda V\)</span>, and (iv) monotone scaling <span class="math inline">\(S'(V) \ge s_0 > 0\)</span> (true for the exponential barrier and truncated gate).</p>
+<p>Then the negative term dominates and yields <span class="math inline">\(\dot V \le -2k\lambda V\)</span> for some <span class="math inline">\(k>0\)</span>, so:</p>
+<p><span class="math display">\[
+V(t) \le V(0)\,e^{-2k\lambda t}
+\]</span></p>
+<p>Hence constraint violation decays exponentially, implying local exponential convergence to <span class="math inline">\(\mathcal{M}\)</span>.</p>
+<h3 id="global-convergence-sketch">Global convergence (sketch)</h3>
+<p>To extend beyond local convergence, assume compact sublevel sets of <span class="math inline">\(L_{\text{mult}}\)</span>. This holds if either <span class="math inline">\(L_{\text{data}}\)</span> is coercive or <span class="math inline">\(V(\theta)\to\infty\)</span> as <span class="math inline">\(\|\theta\|\to\infty\)</span> with <span class="math inline">\(S(V)\)</span> at least linear in <span class="math inline">\(V\)</span>. With <span class="math inline">\(L_{\text{data}}(\theta)\ge m>0\)</span> and <span class="math inline">\(S'(V)\ge s_0>0\)</span> for <span class="math inline">\(V>0\)</span>, one can show <span class="math inline">\(\dot V &lt; 0\)</span> outside a neighborhood of <span class="math inline">\(\mathcal{M}\)</span>, trajectories remain bounded, and LaSalle’s invariance principle yields convergence to <span class="math inline">\(\mathcal{M}\)</span> from arbitrary initialization.</p>
+<h3 id="rate-matching-sketch">Rate matching for hyperparameter selection (sketch)</h3>
+<p>Near <span class="math inline">\(\mathcal{M}\)</span>, use the constraint PL inequality <span class="math inline">\(\|\nabla V\|^2 \ge 2\lambda_{\min}(J_c J_c^{\top})\,V\)</span>. Then:</p>
+<p><span class="math display">\[
+\dot V \le -2m\,S'(0)\,\lambda_{\min}(J_c J_c^{\top})\,V
+\]</span></p>
+<p>For <span class="math inline">\(S(V)=G(V)e^{\gamma V}\)</span>, <span class="math inline">\(S'(0)\approx \gamma G(0) + G'(0)\)</span> (or after clamping, <span class="math inline">\(S'(0)\approx \gamma\epsilon\)</span>), yielding a rate bound that links <span class="math inline">\(\gamma\)</span> to the desired exponential decay and provides a predictive tuning rule.</p>
+<h3 id="stochastic-extension-sketch">Stochastic mini-batch extension (sketch)</h3>
+<p>Model mini-batch training as an SDE:</p>
+<p><span class="math display">\[
+d\theta_t = -\nabla L_{\text{mult}}(\theta_t)\,dt + \sqrt{2\sigma^2}\,dW_t
+\]</span></p>
+<p>Applying Itô’s formula to <span class="math inline">\(V\)</span> gives a drift term dominated by <span class="math inline">\(L_{\text{data}}S'(V)\|\nabla V\|^2\)</span> and a diffusion term <span class="math inline">\(\sigma^2\mathrm{tr}(\nabla^2 V)\)</span>. Under a dissipativity condition, one obtains:</p>
+<p><span class="math display">\[
+\frac{d}{dt}\mathbb{E}[V] \le -a\,\mathbb{E}[V] + b
+\]</span></p>
+<p>so <span class="math inline">\(\mathbb{E}[V(t)]\)</span> contracts exponentially to an <span class="math inline">\(O(\sigma^2)\)</span> neighborhood. With log-Sobolev or Poincaré conditions, exponential concentration inequalities follow.</p>
 <h3 id="convergence-analysis">Convergence analysis</h3>
 <p>Training with multiplicative constraints exhibits stable convergence without gradient explosion, even for long unrolled simulations. The key factors contributing to stability are:</p>
 <ol type="1">
