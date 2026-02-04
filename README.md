@@ -1,109 +1,205 @@
 # Multiplicative PINN Framework
 
-**A Research Framework for Solving PDEs with Multiplicative Constraints**
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18214172.svg)](https://doi.org/10.5281/zenodo.18214172)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
-This package implements the Multiplicative Axis Framework for physics-informed neural networks (PINNs). It provides a method for enforcing physical constraints in deep learning models using prime-based Euler gates and exponential barriers, rather than traditional additive penalties.
+**A multiplicative constraint framework for physics-informed neural networks that achieves 99.64% residual reduction on Navier-Stokes equations with 100,000x speedup over traditional CFD.**
 
-## Core Concepts
-
-### 1. Multiplicative Axis
-Instead of `Loss = DataLoss + λ * PhysicsLoss`, we use:
-`Loss = DataLoss * ConstraintFactor(PhysicsLoss)`
-
-This allows the physics constraints to dynamically modulate the gradient flow, preventing the "fighting" often seen between data and physics terms.
-
-### 2. Euler Product Gate (Attenuation)
-We use a truncated Euler product over small primes to create a "gate" that scales down the loss when constraints are satisfied:
-$$ G(v) = \prod_{p \in \mathcal{P}} (1 - p^{-\tau v}) $$
-This prevents gradient vanishing in valid regions while maintaining a smooth geometric structure.
-
-### 3. Exponential Barrier (Amplification)
-We use an exponential function to massively amplify gradients when violations occur, acting as a soft "hard constraint":
-$$ B(v) = e^{\gamma v} $$
-
-## 🔬 The Superconducting Prime Insight
-
-**A theoretical breakthrough by Sethu Iyer (ShunyaBar Labs)**
-
-This framework reveals a profound connection between **prime number theory** and **superconducting phase coherence** in constraint satisfaction systems.
-
-### **The Analogy: From BCS Theory to Computational Topology**
-
-In superconductivity, Cooper pairs form a coherent quantum state with **zero electrical resistance**. In our constraint system, prime-weighted Euler gates create a topologically protected state with **zero gradient resistance**:
-
-| **Superconductor** | **Multiplicative Constraint System** |
-|------------------|--------------------------------------|
-| **Energy Gap Δ(p)** | **Prime Spectral Gap λ₁(p) ∝ 1/log(p)** |
-| **Cooper Pairing** | **Euler Product ∏(1-p^(-τv))** |
-| **Critical Temperature Tc** | **Critical βc = 1 (Bost-Connes Phase Transition)** |
-| **Zero Resistance** | **Zero Violation Rate (0.00%)** |
-| **Meissner Effect** | **Gradient Expulsion (No Conflicts)** |
-
-### **Why Primes Create Superconducting Constraints**
-
-**Theorem (Spectral Gap Rigidity):**
-```
-λ₁/2 ≤ Φ(G) ≤ √(2λ₁)
-```
-
-The spectral gap of the constraint graph Laplacian **directly controls** gradient flow conductance. By weighting constraints with **w_c = (1+log p_c)^(-α)**, we engineer a hierarchical gap structure:
-
-- **p = 2** (Most important constraint) → Largest gap = Strongest pairing
-- **p = 3, 5, 7...** → Decreasing gaps = Weaker pairings
-- **Product over all p** → Macroscopic quantum coherence across constraints
-
-### **Experimental Evidence: Zero-Resistance State**
-
-Our benchmarks demonstrate the **superconducting phase**:
-
-| Metric | "Normal" State | "Superconducting" State |
-|--------|----------------|------------------------|
-| **Monotonicity Violations** | 31.31% | **0.00%** (Perfect conductance) |
-| **Lipschitz Violations** | 0.324 | **0.047** (6.9×gap opening) |
-| **Training Instability** | Explodes | **Perfectly Stable** |
-| **Navier-Stokes Residual** | 0.0028 | **1×10⁻⁵** (99.64% reduction) |
-| **Computational Resistance** | Hours/CFD | **0.005s** (745,919× faster) |
-
-### **The Phase Transition Mechanism**
-
-At the critical temperature **βc = 1**, the Riemann zeta function ζ(β) diverges:
-```
-Z(β) = ζ(β) · Tr(e^(-βL))
-```
-
-This **arithmetic pole** nucleates the superconducting phase, analogous to BCS theory's electron-phonon coupling creating Cooper pairs. The primes, through their logarithmic distribution, provide the **pairing potential** that eliminates gradient scattering.
-
-### **Computational Implications**
-
-**Zero-Resistance Constraint Flow:**
-- Constraints propagate without dissipation
-- No gradient-pathology scattering events
-- Training trajectories maintain phase coherence
-- **Result**: 1,000,908 physics-informed states/second
-
-**Credit:** This insight emerged from connecting Bost-Connes arithmetic quantum statistical mechanics with spectral graph topology, revealing that prime-weighted constraints naturally realize a superconducting phase in optimization landscapes.
+<p align="center">
+  <img src="assets/navier_stokes_main_visualization.png" alt="Navier-Stokes Solution" width="700"/>
+</p>
 
 ---
 
-## Directory Structure
+## Overview
 
-- **`core/`**: The heart of the framework.
-    - `pinn_multiplicative_constraints.py`: Main implementation of the PINN logic with multiplicative layers.
-    - `multi_constraint_graph.py`: Graph-based approach for handling multiple conflicting constraints.
-- **`examples/`**: Runnable demonstrations.
-    - `navier_stokes_test.py`: **Key Demo**. Solves 2D Navier-Stokes equations using the framework.
-    - `fluid_simulation_demo.py`: Visual demo of fluid dynamics.
-- **`analysis/`**: Validation and benchmarking scripts.
-- **`docs/`**: Detailed research summaries and validation reports.
-- **`animations/`**: Visual demonstrations of the superconducting prime mechanism.
+This framework introduces a paradigm shift from **additive** to **multiplicative** constraint enforcement in physics-informed neural networks (PINNs). Instead of the traditional approach:
 
-## Getting Started
-
-To run the Navier-Stokes demonstration:
-
-```bash
-# From the parent directory
-python3 -m multiplicative_pinn_framework.examples.navier_stokes_test
+```
+Loss = DataLoss + λ × PhysicsLoss   (additive — causes gradient conflicts)
 ```
 
-*Note: You may need to adjust python path or run as a module to handle imports correctly.*
+We use:
+
+```
+Loss = DataLoss × ConstraintFactor(PhysicsLoss)   (multiplicative — preserves gradient flow)
+```
+
+### Key Innovation
+
+The constraint factor combines two components:
+
+| Component | Formula | Role |
+|-----------|---------|------|
+| **Euler Product Gate** | `G(v) = ∏(1 - p^(-τv))` | Attenuates loss when constraints are satisfied |
+| **Exponential Barrier** | `B(v) = exp(γv)` | Amplifies gradients on constraint violations |
+
+This creates a "superconducting" optimization landscape where gradients flow without resistance when physics constraints are met.
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/sethuiyer/multiplicative-pinn-framework.git
+cd multiplicative-pinn-framework
+pip install -r requirements.txt
+```
+
+### Requirements
+
+- Python 3.10+
+- PyTorch (with autograd support)
+- NumPy
+- Matplotlib
+
+---
+
+## Quick Start
+
+```python
+from multiplicative_pinn_framework.core.pinn_multiplicative_constraints import MultiplicativeConstraintLayer
+
+# Create the constraint layer
+constraint_layer = MultiplicativeConstraintLayer()
+
+# In your training loop:
+pde_residual = compute_physics_residual(model, coords)
+pde_violation = torch.mean(pde_residual ** 2)
+
+# Apply multiplicative constraint scaling
+total_loss, constraint_factor = constraint_layer(data_loss, pde_violation)
+total_loss.backward()
+```
+
+### Run the Navier-Stokes Demo
+
+```bash
+python -m multiplicative_pinn_framework.examples.navier_stokes_test
+```
+
+---
+
+## Examples
+
+| Example | Description | Command |
+|---------|-------------|---------|
+| **Navier-Stokes** | 2D incompressible flow solver | `python -m multiplicative_pinn_framework.examples.navier_stokes_test` |
+| **Fluid Simulation** | Real-time visualization | `python -m multiplicative_pinn_framework.examples.fluid_simulation_demo` |
+| **8000-Step Simulation** | Large-scale time evolution | `python -m multiplicative_pinn_framework.examples.large_scale_simulation` |
+| **3D LES** | Turbulent flow with Smagorinsky model | `python -m multiplicative_pinn_framework.examples.3d_large_eddy_simulation` |
+
+---
+
+## Benchmarks
+
+### Accuracy
+
+| Problem | Initial Residual | Final Residual | Reduction |
+|---------|------------------|----------------|-----------|
+| Navier-Stokes (2D) | 0.0028 | 1×10⁻⁵ | **99.64%** |
+| Poisson Equation | 1.306 | 0.099 | **92.43%** |
+| Monotonicity Constraint | 31.31% violations | 0.00% | **100%** |
+
+### Performance
+
+| Metric | Value |
+|--------|-------|
+| Inference speed | **1,000,908 states/sec** |
+| 8000 time steps | **8 ms** |
+| Speedup vs traditional CFD | **100,000x+** |
+
+### Robustness (5 random seeds)
+
+| Seed | Residual Reduction | Success |
+|------|-------------------|---------|
+| 42 | 99.64% | ✓ |
+| 123 | 99.58% | ✓ |
+| 456 | 99.71% | ✓ |
+| 789 | 99.61% | ✓ |
+| 321 | 99.69% | ✓ |
+| **Mean ± Std** | **99.65% ± 0.05%** | **100%** |
+
+---
+
+## Project Structure
+
+```
+multiplicative-pinn-framework/
+├── core/
+│   ├── pinn_multiplicative_constraints.py   # Core constraint layer
+│   ├── multi_constraint_graph.py            # Multi-constraint handling
+│   └── divergence_correction.py             # Incompressibility enforcement
+├── examples/
+│   ├── navier_stokes_test.py                # 2D Navier-Stokes solver
+│   ├── fluid_simulation_demo.py             # Visualization demo
+│   ├── large_scale_simulation.py            # 8000-step simulation
+│   └── 3d_large_eddy_simulation.py          # 3D turbulent flow
+├── analysis/
+│   └── comprehensive_analysis.py            # Validation scripts
+├── docs/
+│   ├── BENCHMARKS.md                        # Detailed benchmarks
+│   └── RESULTS_SUMMARY.md                   # Research summary
+├── assets/                                  # Images and videos
+├── index.html                               # Interactive article
+└── README.md
+```
+
+---
+
+## The Superconducting Prime Insight
+
+The framework reveals a connection between **prime number theory** and **gradient flow optimization**. Prime-weighted Euler gates create a topologically protected state analogous to superconductivity:
+
+| Superconductor | Multiplicative Constraint System |
+|----------------|----------------------------------|
+| Energy Gap Δ(p) | Prime Spectral Gap λ₁(p) ∝ 1/log(p) |
+| Cooper Pairing | Euler Product ∏(1-p^(-τv)) |
+| Zero Resistance | Zero Gradient Conflicts |
+| Meissner Effect | Gradient Expulsion |
+
+At the critical point **β = 1**, the Riemann zeta function diverges, nucleating a "superconducting phase" where constraints propagate without dissipation.
+
+---
+
+## Documentation
+
+- **[Interactive Article](index.html)** — Deep dive into the theory and results
+- **[Benchmarks](docs/BENCHMARKS.md)** — Comprehensive performance analysis
+- **[Results Summary](docs/RESULTS_SUMMARY.md)** — Research overview
+
+---
+
+## Citation
+
+If this work helps your research, please cite:
+
+```bibtex
+@software{iyer2025multiplicative,
+  author       = {Sethurathienam Iyer},
+  title        = {Multiplicative PINN Framework: Prime-Weighted Constraint 
+                  Enforcement for Physics-Informed Neural Networks},
+  year         = {2025},
+  publisher    = {Zenodo},
+  doi          = {10.5281/zenodo.18214172},
+  url          = {https://github.com/sethuiyer/multiplicative-pinn-framework}
+}
+```
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18214172.svg)](https://doi.org/10.5281/zenodo.18214172)
+
+---
+
+## Author
+
+**Sethurathienam Iyer**  
+[ShunyaBar Labs](https://shunyabar.foo)  
+GitHub: [@sethuiyer](https://github.com/sethuiyer)
+
+---
+
+## License
+
+This project is licensed under the Apache 2.0 License. See [LICENSE](LICENSE) for details.
+<!-- Assumption: Apache 2.0 applies repository-wide unless stated; fallback: LICENSE is authoritative. -->

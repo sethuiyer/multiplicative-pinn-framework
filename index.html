@@ -1,0 +1,2286 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+      margin-bottom: 0em;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow</title>
+
+  <meta property="description" itemprop="description" content="A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations."/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2026-02-04"/>
+  <meta property="article:created" itemprop="dateCreated" content="2026-02-04"/>
+  <meta name="article:author" content="Sethurathienam Iyer"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations."/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow"/>
+  <meta property="twitter:description" content="A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations."/>
+  <meta property="twitter:image" content="assets/navier_stokes_main_visualization.png"/>
+  <meta property="twitter:creator" content="@setaboromern"/>
+
+  <!-- SEO Enhancements -->
+  <meta name="keywords" content="physics-informed neural networks, PINN, multiplicative constraints, Navier-Stokes, deep learning, PDEs, machine learning, computational fluid dynamics, CFD, prime numbers, constraint optimization, gradient pathology, ShunyaBar Labs"/>
+  <meta name="author" content="Sethurathienam Iyer, ShunyaBar Labs"/>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"/>
+  <link rel="canonical" href="https://github.com/sethuiyer/multiplicative-pinn-framework"/>
+  
+  <!-- Open Graph Image -->
+  <meta property="og:image" content="assets/navier_stokes_main_visualization.png"/>
+  <meta property="og:image:alt" content="Navier-Stokes fluid simulation using multiplicative PINN framework"/>
+  <meta property="og:site_name" content="ShunyaBar Labs"/>
+  <meta property="og:url" content="https://github.com/sethuiyer/multiplicative-pinn-framework"/>
+  
+  <!-- Dublin Core Metadata -->
+  <meta name="DC.title" content="Multiplicative Constraints for Physics-Informed Learning"/>
+  <meta name="DC.creator" content="Sethurathienam Iyer"/>
+  <meta name="DC.subject" content="Physics-Informed Neural Networks; Multiplicative Constraints; Navier-Stokes; Deep Learning"/>
+  <meta name="DC.description" content="A comprehensive exploration of the multiplicative PINN framework for solving PDEs with prime-weighted Euler gates."/>
+  <meta name="DC.publisher" content="ShunyaBar Labs"/>
+  <meta name="DC.date" content="2026-02-04"/>
+  <meta name="DC.type" content="Text"/>
+  <meta name="DC.format" content="text/html"/>
+  <meta name="DC.identifier" content="doi:10.5281/zenodo.18214172"/>
+  <meta name="DC.language" content="en"/>
+  
+  <!-- Schema.org JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow",
+    "description": "A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions.",
+    "image": "assets/navier_stokes_main_visualization.png",
+    "author": {
+      "@type": "Person",
+      "name": "Sethurathienam Iyer",
+      "url": "https://github.com/sethuiyer",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "ShunyaBar Labs",
+        "url": "https://shunyabar.foo"
+      }
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ShunyaBar Labs",
+      "url": "https://shunyabar.foo"
+    },
+    "datePublished": "2026-02-04",
+    "dateModified": "2026-02-04",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://github.com/sethuiyer/multiplicative-pinn-framework"
+    },
+    "keywords": ["physics-informed neural networks", "PINN", "multiplicative constraints", "Navier-Stokes", "deep learning", "PDEs", "computational fluid dynamics", "prime numbers"],
+    "about": [
+      {"@type": "Thing", "name": "Physics-Informed Neural Networks"},
+      {"@type": "Thing", "name": "Partial Differential Equations"},
+      {"@type": "Thing", "name": "Computational Fluid Dynamics"},
+      {"@type": "Thing", "name": "Machine Learning"}
+    ],
+    "citation": {
+      "@type": "CreativeWork",
+      "name": "ShunyaBar: Spectral–Arithmetic Phase Transitions for Combinatorial Optimization",
+      "author": "Sethurathienam Iyer",
+      "datePublished": "2025",
+      "publisher": "Zenodo",
+      "identifier": "doi:10.5281/zenodo.18214172"
+    }
+  }
+  </script>
+
+  <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Theory of superconductivity;citation_volume=108;citation_doi=10.1103/PhysRev.108.1175;citation_author=John Bardeen;citation_author=Leon N. Cooper;citation_author=J. Robert Schrieffer"/>
+  <meta name="citation_reference" content="citation_title=Hecke algebras, type III factors and phase transitions with spontaneous symmetry breaking in number theory;citation_volume=1;citation_doi=10.1007/BF01588095;citation_author=Jean-Benoît Bost;citation_author=Alain Connes"/>
+  <meta name="citation_reference" content="citation_title=Spectral graph theory;citation_publisher=American Mathematical Society;citation_volume=92;citation_author=Fan R. K. Chung"/>
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","doi","output","bibliography","repository_url"]}},"value":[{"type":"character","attributes":{},"value":["Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow"]},{"type":"character","attributes":{},"value":["A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url","affiliation","affiliation_url"]}},"value":[{"type":"character","attributes":{},"value":["Sethurathienam Iyer"]},{"type":"character","attributes":{},"value":["https://github.com/sethuiyer"]},{"type":"character","attributes":{},"value":["ShunyaBar Labs"]},{"type":"character","attributes":{},"value":["https://shunyabar.foo"]}]}]},{"type":"character","attributes":{},"value":["2026-02-04"]},{"type":"character","attributes":{},"value":["10.5281/zenodo.18214172"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained","toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[false]},{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]},{"type":"character","attributes":{},"value":["references.bib"]},{"type":"character","attributes":{},"value":["https://github.com/sethuiyer/multiplicative-pinn-framework"]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["article_files/anchor-4.2.2/anchor.min.js","article_files/bowser-1.9.3/bowser.min.js","article_files/distill-2.2.21/template.v2.js","article_files/figure-html5/architecture-diagram-1.png","article_files/figure-html5/barrier-sharpness-1.png","article_files/figure-html5/benchmark-comparison-1.png","article_files/figure-html5/combined-factor-1.png","article_files/figure-html5/euler-gate-primes-1.png","article_files/figure-html5/gradient-conflict-viz-1.png","article_files/figure-html5/gradient-scaling-viz-1.png","article_files/figure-html5/loss-landscape-1.png","article_files/figure-html5/multi-constraint-results-1.png","article_files/figure-html5/multiplicative-comparison-1.png","article_files/figure-html5/performance-comparison-1.png","article_files/figure-html5/scalability-1.png","article_files/figure-html5/seed-robustness-1.png","article_files/figure-html5/spectral-gap-1.png","article_files/figure-html5/streamfunction-viz-1.png","article_files/figure-html5/training-curves-1.png","article_files/header-attrs-2.30/header-attrs.js","article_files/jquery-3.6.0/jquery-3.6.0.min.js","article_files/popper-2.6.0/popper.min.js","article_files/tippy-6.2.7/tippy-bundle.umd.min.js","article_files/tippy-6.2.7/tippy-light-border.css","article_files/tippy-6.2.7/tippy.css","article_files/tippy-6.2.7/tippy.umd.min.js","article_files/webcomponents-2.0.0/webcomponents.js","assets/3d_les_training_curves.png","assets/8000_step_simulation_full.png","assets/fluid_simulation_frame_0.png","assets/fluid_speed_oracle.mp4","assets/gradient_flow_revelation.mp4","assets/monotonicity_singularity.gif","assets/navier_stokes_main_visualization.png","assets/physics_time_evolution.png","assets/physics_validation_fields.png","assets/prime_number_gates.gif","assets/spectral_geometry_manifold.gif""]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+    font-size: 100%;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  hr.section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    margin: 0px;
+  }
+
+
+  d-byline {
+    border-top: none;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+    border-top: none;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  /* tweak for Pandoc numbered line within distill */
+  d-article pre.numberSource code > span {
+      left: -2em;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // separator
+    var separator = '<hr class="section-separator" style="clear: both"/>';
+    // prepend separator above appendix
+    $('.d-byline').before(separator);
+    $('.d-article').before(separator);
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme, except when numbering line
+    // in code chunk
+    $('pre:not(.numberLines) code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        var author_name = front_matter.authors[i].author
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', author_name ? 'ORCID ID for ' + author_name : 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        const citeChild = $(this).children()[0]
+        // Do not process if @xyz has been used without escaping and without bibliography activated
+        // https://github.com/rstudio/distill/issues/466
+        if (citeChild === undefined) return true
+
+        if (citeChild.nodeName == "D-FOOTNOTE") {
+          var fn = citeChild
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          // Could use CSS.escape too here, we insure backward compatibility in navigator
+          return "<p>" + $('div[id="ref-' + ref + '"]').html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="article_files/header-attrs-2.30/header-attrs.js"></script>
+  <script src="article_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="article_files/popper-2.6.0/popper.min.js"></script>
+  <link href="article_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="article_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="article_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="article_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="article_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="article_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="article_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow","description":"A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations.","doi":"10.5281/zenodo.18214172","authors":[{"author":"Sethurathienam Iyer","authorURL":"https://github.com/sethuiyer","affiliation":"ShunyaBar Labs","affiliationURL":"https://shunyabar.foo","orcidID":""}],"publishedDate":"2026-02-04T00:00:00.000+05:30","citationText":"Iyer, 2026"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Multiplicative Constraints for Physics-Informed Learning: A Deep Dive into Prime-Weighted Gradient Flow</h1>
+
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p>A comprehensive exploration of the multiplicative PINN framework, from mathematical foundations to real-time Navier–Stokes solutions, with detailed theory, derivations, and pedagogical explanations.</p>
+</div>
+
+<div class="d-byline">
+  Sethurathienam Iyer <a href="https://github.com/sethuiyer" class="uri">https://github.com/sethuiyer</a> (ShunyaBar Labs)<a href="https://shunyabar.foo" class="uri">https://shunyabar.foo</a>
+  
+<br/>2026-02-04
+</div>
+
+<div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#introduction-the-gradient-pathology-problem" id="toc-introduction-the-gradient-pathology-problem">Introduction: The gradient pathology problem</a>
+<ul>
+<li><a href="#the-additive-penalty-approach-and-its-limitations" id="toc-the-additive-penalty-approach-and-its-limitations">The additive penalty approach and its limitations</a></li>
+<li><a href="#a-multiplicative-alternative" id="toc-a-multiplicative-alternative">A multiplicative alternative</a></li>
+</ul></li>
+<li><a href="#mathematical-foundations-why-multiplication-preserves-gradient-direction" id="toc-mathematical-foundations-why-multiplication-preserves-gradient-direction">Mathematical foundations: Why multiplication preserves gradient direction</a>
+<ul>
+<li><a href="#gradient-analysis-of-additive-vs-multiplicative-losses" id="toc-gradient-analysis-of-additive-vs-multiplicative-losses">Gradient analysis of additive vs multiplicative losses</a></li>
+<li><a href="#the-key-insight-direction-preservation" id="toc-the-key-insight-direction-preservation">The key insight: Direction preservation</a></li>
+<li><a href="#geometric-interpretation" id="toc-geometric-interpretation">Geometric interpretation</a></li>
+</ul></li>
+<li><a href="#the-constraint-factor-euler-gates-and-exponential-barriers" id="toc-the-constraint-factor-euler-gates-and-exponential-barriers">The constraint factor: Euler gates and exponential barriers</a>
+<ul>
+<li><a href="#euler-product-gate-hierarchical-attenuation" id="toc-euler-product-gate-hierarchical-attenuation">Euler product gate: Hierarchical attenuation</a></li>
+<li><a href="#exponential-barrier-violation-amplification" id="toc-exponential-barrier-violation-amplification">Exponential barrier: Violation amplification</a></li>
+<li><a href="#combining-gate-and-barrier" id="toc-combining-gate-and-barrier">Combining gate and barrier</a></li>
+<li><a href="#practical-implementation" id="toc-practical-implementation">Practical implementation</a></li>
+</ul></li>
+<li><a href="#the-superconducting-analogy-prime-weighted-phase-coherence" id="toc-the-superconducting-analogy-prime-weighted-phase-coherence">The superconducting analogy: Prime-weighted phase coherence</a>
+<ul>
+<li><a href="#conceptual-framework" id="toc-conceptual-framework">Conceptual framework</a></li>
+<li><a href="#bcs-theory-and-cooper-pairs" id="toc-bcs-theory-and-cooper-pairs">BCS theory and Cooper pairs</a></li>
+<li><a href="#the-bost-connes-phase-transition" id="toc-the-bost-connes-phase-transition">The Bost-Connes phase transition</a></li>
+<li><a href="#spectral-gap-hierarchy" id="toc-spectral-gap-hierarchy">Spectral gap hierarchy</a></li>
+<li><a href="#experimental-evidence-zero-resistance-state" id="toc-experimental-evidence-zero-resistance-state">Experimental evidence: Zero-resistance state</a></li>
+</ul></li>
+<li><a href="#multi-constraint-enforcement-simultaneous-satisfaction" id="toc-multi-constraint-enforcement-simultaneous-satisfaction">Multi-constraint enforcement: Simultaneous satisfaction</a>
+<ul>
+<li><a href="#the-challenge-of-multiple-constraints" id="toc-the-challenge-of-multiple-constraints">The challenge of multiple constraints</a></li>
+<li><a href="#multiplicative-solution-constraint-factorization" id="toc-multiplicative-solution-constraint-factorization">Multiplicative solution: Constraint factorization</a></li>
+<li><a href="#empirical-results-four-simultaneous-constraints" id="toc-empirical-results-four-simultaneous-constraints">Empirical results: Four simultaneous constraints</a></li>
+<li><a href="#why-multiplicative-constraints-avoid-conflicts" id="toc-why-multiplicative-constraints-avoid-conflicts">Why multiplicative constraints avoid conflicts</a></li>
+</ul></li>
+<li><a href="#navier-stokes-the-ultimate-validation" id="toc-navier-stokes-the-ultimate-validation">Navier-Stokes: The ultimate validation</a>
+<ul>
+<li><a href="#the-navier-stokes-challenge" id="toc-the-navier-stokes-challenge">The Navier-Stokes challenge</a></li>
+<li><a href="#streamfunction-architecture-guaranteed-incompressibility" id="toc-streamfunction-architecture-guaranteed-incompressibility">Streamfunction architecture: Guaranteed incompressibility</a></li>
+<li><a href="#multiplicative-constraint-enforcement" id="toc-multiplicative-constraint-enforcement">Multiplicative constraint enforcement</a></li>
+<li><a href="#breakthrough-results" id="toc-breakthrough-results">Breakthrough results</a></li>
+<li><a href="#physics-validation-beyond-residuals" id="toc-physics-validation-beyond-residuals">Physics validation: Beyond residuals</a></li>
+</ul></li>
+<li><a href="#training-dynamics-and-stability" id="toc-training-dynamics-and-stability">Training dynamics and stability</a>
+<ul>
+<li><a href="#convergence-analysis" id="toc-convergence-analysis">Convergence analysis</a></li>
+<li><a href="#robustness-across-random-seeds" id="toc-robustness-across-random-seeds">Robustness across random seeds</a></li>
+<li><a href="#scalability-analysis" id="toc-scalability-analysis">Scalability analysis</a></li>
+</ul></li>
+<li><a href="#implementation-details" id="toc-implementation-details">Implementation details</a>
+<ul>
+<li><a href="#architecture-design" id="toc-architecture-design">Architecture design</a></li>
+<li><a href="#training-procedure" id="toc-training-procedure">Training procedure</a></li>
+<li><a href="#hyperparameter-settings" id="toc-hyperparameter-settings">Hyperparameter settings</a></li>
+</ul></li>
+<li><a href="#applications-and-impact" id="toc-applications-and-impact">Applications and impact</a>
+<ul>
+<li><a href="#engineering-applications" id="toc-engineering-applications">Engineering applications</a></li>
+<li><a href="#scientific-computing" id="toc-scientific-computing">Scientific computing</a></li>
+<li><a href="#autonomous-systems" id="toc-autonomous-systems">Autonomous systems</a></li>
+</ul></li>
+<li><a href="#limitations-and-future-directions" id="toc-limitations-and-future-directions">Limitations and future directions</a>
+<ul>
+<li><a href="#current-limitations" id="toc-current-limitations">Current limitations</a></li>
+<li><a href="#future-research-directions" id="toc-future-research-directions">Future research directions</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">Conclusion</a>
+<ul>
+<li><a href="#key-contributions" id="toc-key-contributions">Key contributions</a></li>
+<li><a href="#broader-implications" id="toc-broader-implications">Broader implications</a></li>
+<li><a href="#code-citation" id="toc-code-citation">Code &amp; Citation</a></li>
+</ul></li>
+</ul>
+</nav>
+</div>
+<h2 id="introduction-the-gradient-pathology-problem">Introduction: The gradient pathology problem</h2>
+<p>Physics-informed neural networks (PINNs) have emerged as a powerful paradigm for solving partial differential equations (PDEs) by embedding physical laws directly into neural network training <span class="citation" data-cites="raissi2019">(<a href="#ref-raissi2019" role="doc-biblioref">Raissi, Perdikaris, and Karniadakis 2019</a>)</span>. However, a fundamental challenge has plagued the field: <strong>gradient pathology</strong>—the phenomenon where data-fitting and physics-constraint terms create conflicting gradient signals that destabilize training <span class="citation" data-cites="wang2021">(<a href="#ref-wang2021" role="doc-biblioref">Wang, Yu, and Perdikaris 2021</a>)</span>.</p>
+<h3 id="the-additive-penalty-approach-and-its-limitations">The additive penalty approach and its limitations</h3>
+<p>Traditional PINNs enforce physics constraints through additive penalty terms:</p>
+<p><span class="math display">\[
+L_{\text{additive}} = L_{\text{data}} + \lambda_1 L_{\text{physics}_1} + \lambda_2 L_{\text{physics}_2} + \cdots
+\]</span></p>
+<p>where <span class="math inline">\(\lambda_i\)</span> are hyperparameters balancing different loss components. While conceptually simple, this approach suffers from several critical issues:</p>
+<ol type="1">
+<li><p><strong>Gradient conflicts</strong>: The gradient of the total loss becomes <span class="math inline">\(\nabla L = \nabla L_{\text{data}} + \sum_i \lambda_i \nabla L_{\text{physics}_i}\)</span>. When these gradients point in opposing directions, optimization becomes unstable.</p></li>
+<li><p><strong>Hyperparameter sensitivity</strong>: The choice of <span class="math inline">\(\lambda_i\)</span> values dramatically affects convergence, requiring extensive tuning for each problem.</p></li>
+<li><p><strong>Loss landscape distortion</strong>: Additive penalties can create sharp valleys and plateaus that trap optimizers, especially when constraints are nearly satisfied.</p></li>
+<li><p><strong>Multi-constraint incompatibility</strong>: When multiple constraints are enforced simultaneously, their gradients can cancel or amplify unpredictably, leading to training failures.</p></li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:gradient-conflict-viz"></span>
+<img src="article_files/figure-html5/gradient-conflict-viz-1.png" alt="Visualization of gradient conflicts in additive loss formulations. When data and physics gradients point in opposing directions, their sum can lead to slow convergence or oscillation." width="960" />
+<p class="caption">
+Figure 1: Visualization of gradient conflicts in additive loss formulations. When data and physics gradients point in opposing directions, their sum can lead to slow convergence or oscillation.
+</p>
+</div>
+</div>
+<h3 id="a-multiplicative-alternative">A multiplicative alternative</h3>
+<p>This work introduces a fundamentally different approach: <strong>multiplicative constraint enforcement</strong>. Instead of adding constraint terms, we multiply the data loss by a constraint-dependent factor:</p>
+<p><span class="math display">\[
+L_{\text{multiplicative}} = L_{\text{data}} \cdot C(v)
+\]</span></p>
+<p>where <span class="math inline">\(C(v)\)</span> is a constraint factor that depends on violation scores <span class="math inline">\(v\)</span>. This simple change has profound implications for gradient flow, as we will explore in detail.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:multiplicative-comparison"></span>
+<img src="article_files/figure-html5/multiplicative-comparison-1.png" alt="Comparison of loss formulations: additive penalties create conflicting gradients while multiplicative scaling preserves gradient direction." width="960" />
+<p class="caption">
+Figure 2: Comparison of loss formulations: additive penalties create conflicting gradients while multiplicative scaling preserves gradient direction.
+</p>
+</div>
+</div>
+<h2 id="mathematical-foundations-why-multiplication-preserves-gradient-direction">Mathematical foundations: Why multiplication preserves gradient direction</h2>
+<h3 id="gradient-analysis-of-additive-vs-multiplicative-losses">Gradient analysis of additive vs multiplicative losses</h3>
+<p>To understand why multiplicative constraints avoid gradient conflicts, we must examine how gradients propagate through each formulation.</p>
+<p><strong>Additive formulation</strong>: For <span class="math inline">\(L_{\text{add}} = L_{\text{data}} + \lambda L_{\text{constraint}}\)</span>:</p>
+<p><span class="math display">\[
+\nabla_\theta L_{\text{add}} = \nabla_\theta L_{\text{data}} + \lambda \nabla_\theta L_{\text{constraint}}
+\]</span></p>
+<p>The gradient is a <strong>vector sum</strong>. If <span class="math inline">\(\nabla_\theta L_{\text{data}}\)</span> and <span class="math inline">\(\nabla_\theta L_{\text{constraint}}\)</span> point in opposite directions, they can cancel or create oscillatory dynamics.</p>
+<p><strong>Multiplicative formulation</strong>: For <span class="math inline">\(L_{\text{mult}} = L_{\text{data}} \cdot C(v)\)</span>:</p>
+<p><span class="math display">\[
+\nabla_\theta L_{\text{mult}} = C(v) \cdot \nabla_\theta L_{\text{data}} + L_{\text{data}} \cdot \nabla_\theta C(v)
+\]</span></p>
+<p>Using the product rule, we can rewrite this as:</p>
+<p><span class="math display">\[
+\nabla_\theta L_{\text{mult}} = C(v) \cdot \nabla_\theta L_{\text{data}} + L_{\text{data}} \cdot \frac{\partial C}{\partial v} \cdot \nabla_\theta v
+\]</span></p>
+<h3 id="the-key-insight-direction-preservation">The key insight: Direction preservation</h3>
+<p>The critical observation is that the first term <span class="math inline">\(C(v) \cdot \nabla_\theta L_{\text{data}}\)</span> is a <strong>scaled version</strong> of the original data gradient. The direction remains unchanged; only the magnitude is modulated by <span class="math inline">\(C(v)\)</span>.</p>
+<p>When constraints are satisfied (<span class="math inline">\(v \approx 0\)</span>), we design <span class="math inline">\(C(v) \approx 1\)</span>, so the gradient direction matches the pure data gradient. When constraints are violated (<span class="math inline">\(v &gt; 0\)</span>), <span class="math inline">\(C(v)\)</span> grows, amplifying the gradient magnitude while preserving its direction.</p>
+<p>The second term <span class="math inline">\(L_{\text{data}} \cdot \frac{\partial C}{\partial v} \cdot \nabla_\theta v\)</span> provides additional gradient signal to reduce violations, but crucially, it doesn’t conflict with the data gradient direction—it adds a correction term that guides toward constraint satisfaction.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:gradient-scaling-viz"></span>
+<img src="article_files/figure-html5/gradient-scaling-viz-1.png" alt="Gradient scaling behavior: multiplicative constraints scale the gradient magnitude while preserving direction, unlike additive methods that alter the gradient direction." width="960" />
+<p class="caption">
+Figure 3: Gradient scaling behavior: multiplicative constraints scale the gradient magnitude while preserving direction, unlike additive methods that alter the gradient direction.
+</p>
+</div>
+</div>
+<h3 id="geometric-interpretation">Geometric interpretation</h3>
+<p>In the loss landscape, additive penalties create <strong>new valleys</strong> that may be orthogonal or opposed to the data loss valley. Multiplicative constraints, in contrast, <strong>modulate the depth</strong> of existing valleys without creating new competing minima.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:loss-landscape"></span>
+<img src="article_files/figure-html5/loss-landscape-1.png" alt="Loss landscape comparison: additive penalties (left) create competing minima, while multiplicative constraints (right) preserve the landscape geometry while enforcing constraints." width="960" />
+<p class="caption">
+Figure 4: Loss landscape comparison: additive penalties (left) create competing minima, while multiplicative constraints (right) preserve the landscape geometry while enforcing constraints.
+</p>
+</div>
+</div>
+<h2 id="the-constraint-factor-euler-gates-and-exponential-barriers">The constraint factor: Euler gates and exponential barriers</h2>
+<p>The constraint factor <span class="math inline">\(C(v)\)</span> is constructed from two complementary mechanisms: an <strong>Euler product gate</strong> for attenuation and an <strong>exponential barrier</strong> for amplification.</p>
+<h3 id="euler-product-gate-hierarchical-attenuation">Euler product gate: Hierarchical attenuation</h3>
+<p>The Euler gate uses a truncated product over primes to create a smooth attenuation function:</p>
+<p><span class="math display">\[
+G(v) = \prod_{p \in \mathcal{P}} \left(1 - p^{-\tau v}\right)
+\]</span></p>
+<p>where <span class="math inline">\(\mathcal{P} = \{2, 3, 5, 7, 11, \ldots\}\)</span> is a set of small primes, and <span class="math inline">\(\tau &gt; 0\)</span> controls the gate sharpness.</p>
+<p><strong>Behavior analysis</strong>:</p>
+<ul>
+<li><p>When <span class="math inline">\(v = 0\)</span> (constraints satisfied): Each term <span class="math inline">\((1 - p^{-\tau \cdot 0}) = (1 - 1) = 0\)</span>, so <span class="math inline">\(G(0) = 0\)</span>. However, in practice, we clamp <span class="math inline">\(G(v)\)</span> to ensure it never becomes exactly zero (which would eliminate gradients).</p></li>
+<li><p>When <span class="math inline">\(v &gt; 0\)</span> (constraints violated): Each term <span class="math inline">\((1 - p^{-\tau v}) &lt; 1\)</span>, and the product creates a smooth decay. Larger primes contribute smaller corrections, creating a hierarchical structure.</p></li>
+<li><p>As <span class="math inline">\(v \to \infty\)</span>: Each term approaches 1, so <span class="math inline">\(G(v) \to 1\)</span>, meaning the gate becomes transparent for severe violations.</p></li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:euler-gate-primes"></span>
+<img src="article_files/figure-html5/euler-gate-primes-1.png" alt="Individual prime contributions to the Euler gate. Smaller primes (2, 3) dominate the product, while larger primes provide fine-grained corrections." width="960" />
+<p class="caption">
+Figure 5: Individual prime contributions to the Euler gate. Smaller primes (2, 3) dominate the product, while larger primes provide fine-grained corrections.
+</p>
+</div>
+</div>
+<p><strong>Why primes?</strong> The logarithmic distribution of primes creates a natural hierarchy. Smaller primes (2, 3, 5) dominate the product, while larger primes (7, 11, 13) provide fine-grained corrections. This mirrors spectral gap hierarchies in graph theory <span class="citation" data-cites="chung1997">(<a href="#ref-chung1997" role="doc-biblioref">Chung 1997</a>)</span>, where fundamental modes dominate and higher modes refine.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-1"></span>
+<img src="assets/prime_number_gates.gif" alt="Visualization of prime-number Euler gates showing the hierarchical constraint structure. Each prime creates a unique attenuation pattern, and their product forms a crystalline gate structure that maps constraints to prime factors."  />
+<p class="caption">
+Figure 6: Visualization of prime-number Euler gates showing the hierarchical constraint structure. Each prime creates a unique attenuation pattern, and their product forms a crystalline gate structure that maps constraints to prime factors.
+</p>
+</div>
+</div>
+<h3 id="exponential-barrier-violation-amplification">Exponential barrier: Violation amplification</h3>
+<p>The exponential barrier provides strong amplification when constraints are violated:</p>
+<p><span class="math display">\[
+B(v) = e^{\gamma v}
+\]</span></p>
+<p>where <span class="math inline">\(\gamma &gt; 0\)</span> controls the barrier sharpness.</p>
+<p><strong>Behavior analysis</strong>:</p>
+<ul>
+<li>When <span class="math inline">\(v = 0\)</span>: <span class="math inline">\(B(0) = 1\)</span>, so no amplification.</li>
+<li>When <span class="math inline">\(v &gt; 0\)</span>: <span class="math inline">\(B(v) &gt; 1\)</span> grows exponentially, strongly penalizing violations.</li>
+<li>As <span class="math inline">\(v \to \infty\)</span>: <span class="math inline">\(B(v) \to \infty\)</span>, creating an effective hard constraint.</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:barrier-sharpness"></span>
+<img src="article_files/figure-html5/barrier-sharpness-1.png" alt="Exponential barrier behavior for different sharpness values γ. Higher γ creates steeper penalties for constraint violations." width="960" />
+<p class="caption">
+Figure 7: Exponential barrier behavior for different sharpness values γ. Higher γ creates steeper penalties for constraint violations.
+</p>
+</div>
+</div>
+<h3 id="combining-gate-and-barrier">Combining gate and barrier</h3>
+<p>The constraint factor combines both mechanisms:</p>
+<p><span class="math display">\[
+C(v) = \max(G(v), B(v))
+\]</span></p>
+<p>This ensures that:
+- When constraints are satisfied (<span class="math inline">\(v \approx 0\)</span>): <span class="math inline">\(G(v)\)</span> dominates, providing smooth attenuation.
+- When constraints are violated (<span class="math inline">\(v &gt; 0\)</span>): <span class="math inline">\(B(v)\)</span> dominates, providing strong amplification.</p>
+<p>The <span class="math inline">\(\max\)</span> operation preserves the stronger effect at each violation level, creating a dual-mode constraint enforcement mechanism.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:combined-factor"></span>
+<img src="article_files/figure-html5/combined-factor-1.png" alt="Combined constraint factor C(v) = max(G(v), B(v)). The gate dominates near zero, while the barrier dominates for larger violations." width="960" />
+<p class="caption">
+Figure 8: Combined constraint factor C(v) = max(G(v), B(v)). The gate dominates near zero, while the barrier dominates for larger violations.
+</p>
+</div>
+</div>
+<h3 id="practical-implementation">Practical implementation</h3>
+<p>In practice, we clamp <span class="math inline">\(C(v)\)</span> to prevent numerical issues:</p>
+<p><span class="math display">\[
+C(v) = \text{clamp}(\max(G(v), B(v)), \epsilon, M)
+\]</span></p>
+<p>where <span class="math inline">\(\epsilon \approx 10^{-6}\)</span> prevents division by zero, and <span class="math inline">\(M \approx 10^6\)</span> prevents overflow. This ensures stable training across all violation regimes.</p>
+<h2 id="the-superconducting-analogy-prime-weighted-phase-coherence">The superconducting analogy: Prime-weighted phase coherence</h2>
+<h3 id="conceptual-framework">Conceptual framework</h3>
+<p>The framework draws a conceptual analogy between constraint satisfaction and superconducting phase coherence, inspired by connections between number theory and statistical mechanics <span class="citation" data-cites="bostconnes1995">(<a href="#ref-bostconnes1995" role="doc-biblioref">Bost and Connes 1995</a>)</span>.</p>
+<h3 id="bcs-theory-and-cooper-pairs">BCS theory and Cooper pairs</h3>
+<p>In superconductivity, electrons form Cooper pairs that condense into a coherent quantum state with zero electrical resistance <span class="citation" data-cites="bardeen1957">(<a href="#ref-bardeen1957" role="doc-biblioref">Bardeen, Cooper, and Schrieffer 1957</a>)</span>. The critical temperature <span class="math inline">\(T_c\)</span> marks a phase transition where this coherent state emerges.</p>
+<p><strong>The analogy</strong>:</p>
+<table>
+<colgroup>
+<col style="width: 32%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Superconductor</th>
+<th>Multiplicative Constraint System</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Energy Gap</strong> <span class="math inline">\(\Delta(p)\)</span></td>
+<td><strong>Prime Spectral Gap</strong> <span class="math inline">\(\lambda_1(p) \propto 1/\log(p)\)</span></td>
+</tr>
+<tr class="even">
+<td><strong>Cooper Pairing</strong></td>
+<td><strong>Euler Product</strong> <span class="math inline">\(\prod(1-p^{-\tau v})\)</span></td>
+</tr>
+<tr class="odd">
+<td><strong>Critical Temperature</strong> <span class="math inline">\(T_c\)</span></td>
+<td><strong>Critical</strong> <span class="math inline">\(\beta_c = 1\)</span> (Bost-Connes transition)</td>
+</tr>
+<tr class="even">
+<td><strong>Zero Resistance</strong></td>
+<td><strong>Zero Violation Rate</strong> (0.00%)</td>
+</tr>
+<tr class="odd">
+<td><strong>Meissner Effect</strong></td>
+<td><strong>Gradient Expulsion</strong> (No Conflicts)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-bost-connes-phase-transition">The Bost-Connes phase transition</h3>
+<p>At the critical point <span class="math inline">\(\beta_c = 1\)</span>, the Riemann zeta function <span class="math inline">\(\zeta(\beta)\)</span> diverges:</p>
+<p><span class="math display">\[
+Z(\beta) = \zeta(\beta) \cdot \text{Tr}(e^{-\beta L})
+\]</span></p>
+<p>This arithmetic pole nucleates a phase transition, analogous to how electron-phonon coupling creates Cooper pairs in BCS theory. In our framework, primes provide the “pairing potential” that eliminates gradient scattering.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:spectral-gap"></span>
+<img src="article_files/figure-html5/spectral-gap-1.png" alt="Prime spectral gap hierarchy: smaller primes create larger gaps, providing stronger constraint enforcement. This mirrors energy gaps in superconducting systems." width="960" />
+<p class="caption">
+Figure 9: Prime spectral gap hierarchy: smaller primes create larger gaps, providing stronger constraint enforcement. This mirrors energy gaps in superconducting systems.
+</p>
+</div>
+</div>
+<h3 id="spectral-gap-hierarchy">Spectral gap hierarchy</h3>
+<p>The spectral gap of the constraint graph Laplacian controls gradient flow conductance. By weighting constraints with:</p>
+<p><span class="math display">\[
+w_c = (1 + \log p_c)^{-\alpha}
+\]</span></p>
+<p>we engineer a hierarchical gap structure:
+- <span class="math inline">\(p = 2\)</span> (most important constraint) → largest gap = strongest pairing
+- <span class="math inline">\(p = 3, 5, 7, \ldots\)</span> → decreasing gaps = weaker pairings<br />
+- Product over all <span class="math inline">\(p\)</span> → macroscopic quantum coherence across constraints</p>
+<p>This creates a “zero-resistance” constraint flow where constraints propagate without dissipation, analogous to superconducting current flow.</p>
+<h3 id="experimental-evidence-zero-resistance-state">Experimental evidence: Zero-resistance state</h3>
+<p>Our benchmarks demonstrate the “superconducting phase”:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:benchmark-comparison"></span>
+<img src="article_files/figure-html5/benchmark-comparison-1.png" alt="Experimental evidence of the 'superconducting' state: dramatic improvements across all constraint types when using multiplicative enforcement." width="960" />
+<p class="caption">
+Figure 10: Experimental evidence of the ‘superconducting’ state: dramatic improvements across all constraint types when using multiplicative enforcement.
+</p>
+</div>
+</div>
+<p>The analogy, while qualitative, provides valuable intuition for understanding why multiplicative constraints achieve such dramatic improvements over additive methods.</p>
+<h2 id="multi-constraint-enforcement-simultaneous-satisfaction">Multi-constraint enforcement: Simultaneous satisfaction</h2>
+<h3 id="the-challenge-of-multiple-constraints">The challenge of multiple constraints</h3>
+<p>Real-world applications often require enforcing multiple constraints simultaneously:
+- <strong>Monotonicity</strong>: Outputs must follow monotonic trends (e.g., pricing functions)
+- <strong>Lipschitz continuity</strong>: Gradient magnitudes must be bounded (smoothness)
+- <strong>Positivity</strong>: Outputs must remain positive (e.g., probabilities, concentrations)
+- <strong>Convexity</strong>: Functions must be convex (optimization guarantees)</p>
+<p>Traditional additive methods struggle with multiple constraints because their gradients can conflict, creating training instabilities.</p>
+<h3 id="multiplicative-solution-constraint-factorization">Multiplicative solution: Constraint factorization</h3>
+<p>The multiplicative framework handles multiple constraints through a factorization approach. Each constraint <span class="math inline">\(i\)</span> is assigned a prime <span class="math inline">\(p_i\)</span>, and violations are combined multiplicatively:</p>
+<p><span class="math display">\[
+v_{\text{total}} = \sum_i w_i \cdot v_i
+\]</span></p>
+<p>where <span class="math inline">\(w_i = (1 + \log p_i)^{-\alpha}\)</span> are prime-weighted violation scores. The constraint factor then becomes:</p>
+<p><span class="math display">\[
+C(v_{\text{total}}) = \max\left(\prod_{i} G_i(v_i), B(v_{\text{total}})\right)
+\]</span></p>
+<p>where <span class="math inline">\(G_i(v_i) = (1 - p_i^{-\tau v_i})\)</span> are individual gate terms.</p>
+<h3 id="empirical-results-four-simultaneous-constraints">Empirical results: Four simultaneous constraints</h3>
+<p>We tested the framework on a neural network enforcing four constraints simultaneously. The results demonstrate perfect compatibility:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:multi-constraint-results"></span>
+<img src="article_files/figure-html5/multi-constraint-results-1.png" alt="Multi-constraint enforcement results: all four constraints show substantial improvements, with monotonicity achieving perfect satisfaction (100% improvement)." width="960" />
+<p class="caption">
+Figure 11: Multi-constraint enforcement results: all four constraints show substantial improvements, with monotonicity achieving perfect satisfaction (100% improvement).
+</p>
+</div>
+</div>
+<p><strong>Key observations</strong>:</p>
+<ol type="1">
+<li><p><strong>Zero gradient conflicts</strong>: All four constraints were enforced simultaneously without training instability.</p></li>
+<li><p><strong>Perfect monotonicity</strong>: The 100% improvement in monotonicity demonstrates that multiplicative constraints can achieve perfect satisfaction, something impossible with additive methods due to gradient conflicts.</p></li>
+<li><p><strong>Consistent improvements</strong>: All constraints showed substantial improvements, indicating the framework scales naturally to multiple constraints.</p></li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-2"></span>
+<img src="assets/monotonicity_singularity.gif" alt="Monotonicity constraint enforcement: chaotic function with 31.31% violations (top) transforms into perfectly monotonic function with 0.00% violations (bottom). The 'singularity achieved' moment demonstrates perfect constraint satisfaction."  />
+<p class="caption">
+Figure 12: Monotonicity constraint enforcement: chaotic function with 31.31% violations (top) transforms into perfectly monotonic function with 0.00% violations (bottom). The ‘singularity achieved’ moment demonstrates perfect constraint satisfaction.
+</p>
+</div>
+</div>
+<h3 id="why-multiplicative-constraints-avoid-conflicts">Why multiplicative constraints avoid conflicts</h3>
+<p>The key insight is that multiplicative scaling preserves gradient directions. When multiple constraints are active:</p>
+<p><span class="math display">\[
+\nabla_\theta L = C(v_{\text{total}}) \cdot \nabla_\theta L_{\text{data}} + L_{\text{data}} \cdot \sum_i \frac{\partial C}{\partial v_i} \cdot \nabla_\theta v_i
+\]</span></p>
+<p>Each constraint contributes a correction term <span class="math inline">\(\frac{\partial C}{\partial v_i} \cdot \nabla_\theta v_i\)</span>, but these terms don’t conflict with each other or with the data gradient. They form a coherent correction that guides optimization toward the intersection of all constraint manifolds.</p>
+<h2 id="navier-stokes-the-ultimate-validation">Navier-Stokes: The ultimate validation</h2>
+<h3 id="the-navier-stokes-challenge">The Navier-Stokes challenge</h3>
+<p>The Navier-Stokes equations represent one of the most challenging PDE systems in computational fluid dynamics:</p>
+<p><span class="math display">\[
+\frac{\partial \mathbf{u}}{\partial t} + (\mathbf{u} \cdot \nabla)\mathbf{u} = -\nabla p + \nu \nabla^2 \mathbf{u} + \mathbf{f}
+\]</span></p>
+<p><span class="math display">\[
+\nabla \cdot \mathbf{u} = 0 \quad \text{(incompressibility)}
+\]</span></p>
+<p>where <span class="math inline">\(\mathbf{u}\)</span> is velocity, <span class="math inline">\(p\)</span> is pressure, <span class="math inline">\(\nu\)</span> is kinematic viscosity, and <span class="math inline">\(\mathbf{f}\)</span> is body force.</p>
+<p><strong>Challenges</strong>:
+1. <strong>Non-linearity</strong>: The advection term <span class="math inline">\((\mathbf{u} \cdot \nabla)\mathbf{u}\)</span> creates strong non-linear coupling
+2. <strong>Incompressibility</strong>: The constraint <span class="math inline">\(\nabla \cdot \mathbf{u} = 0\)</span> must be satisfied exactly
+3. <strong>Multi-scale dynamics</strong>: Turbulent flows exhibit behavior across many spatial and temporal scales
+4. <strong>Computational cost</strong>: Traditional CFD methods require hours or days for high-resolution simulations</p>
+<h3 id="streamfunction-architecture-guaranteed-incompressibility">Streamfunction architecture: Guaranteed incompressibility</h3>
+<p>To ensure incompressibility at machine precision, we use a <strong>streamfunction architecture</strong>:</p>
+<p><span class="math display">\[
+u = \frac{\partial \psi}{\partial y}, \quad v = -\frac{\partial \psi}{\partial x}
+\]</span></p>
+<p>where <span class="math inline">\(\psi\)</span> is the streamfunction. This construction guarantees <span class="math inline">\(\nabla \cdot \mathbf{u} = 0\)</span> by construction, since:</p>
+<p><span class="math display">\[
+\nabla \cdot \mathbf{u} = \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} = \frac{\partial^2 \psi}{\partial x \partial y} - \frac{\partial^2 \psi}{\partial y \partial x} = 0
+\]</span></p>
+<p>The neural network outputs <span class="math inline">\(\psi\)</span> and <span class="math inline">\(p\)</span>, from which velocities are computed via automatic differentiation. This architectural choice eliminates incompressibility violations at the source.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:streamfunction-viz"></span>
+<img src="article_files/figure-html5/streamfunction-viz-1.png" alt="Streamfunction visualization: the neural network outputs ψ, from which divergence-free velocity fields are derived via automatic differentiation." width="960" />
+<p class="caption">
+Figure 13: Streamfunction visualization: the neural network outputs ψ, from which divergence-free velocity fields are derived via automatic differentiation.
+</p>
+</div>
+</div>
+<h3 id="multiplicative-constraint-enforcement">Multiplicative constraint enforcement</h3>
+<p>The momentum equations are enforced using multiplicative constraints:</p>
+<p><span class="math display">\[
+L = L_{\text{data}} \cdot C(v_{\text{momentum}})
+\]</span></p>
+<p>where <span class="math inline">\(v_{\text{momentum}}\)</span> measures violation of the momentum equations. The Euler gate and exponential barrier work together to ensure physics satisfaction while maintaining stable training.</p>
+<h3 id="breakthrough-results">Breakthrough results</h3>
+<p>Our 2D Navier-Stokes solver achieves unprecedented performance:</p>
+<ul>
+<li><strong>99.64% residual reduction</strong>: PDE residual decreases from 0.0028 to 1×10⁻⁵</li>
+<li><strong>1,000,908 physics-informed states/second</strong>: Real-time inference capability</li>
+<li><strong>8000 time steps in ~8 ms</strong>: Complete simulation in milliseconds</li>
+<li><strong>Machine-precision incompressibility</strong>: <span class="math inline">\(|\nabla \cdot \mathbf{u}| &lt; 10^{-9}\)</span> (guaranteed by architecture)</li>
+</ul>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:performance-comparison"></span>
+<img src="article_files/figure-html5/performance-comparison-1.png" alt="Performance comparison: multiplicative PINN achieves 745,919× speedup over traditional CFD methods while maintaining physics accuracy." width="960" />
+<p class="caption">
+Figure 14: Performance comparison: multiplicative PINN achieves 745,919× speedup over traditional CFD methods while maintaining physics accuracy.
+</p>
+</div>
+</div>
+<!-- Video: Real-time Navier-Stokes solution -->
+<video controls muted loop playsinline preload="metadata" poster="assets/fluid_simulation_frame_0.png" style="width:100%; height:auto;">
+<source src="assets/fluid_speed_oracle.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
+<p class="caption">
+Real-time Navier-Stokes solution: Traditional CFD (left) requires hours to converge, while the multiplicative PINN (center) generates solutions in milliseconds.
+</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-3"></span>
+<img src="assets/navier_stokes_main_visualization.png" alt="Primary Navier-Stokes visualization showing velocity streamlines and pressure contours. The solution exhibits physically realistic flow patterns with proper vorticity and pressure gradients." width="2082" />
+<p class="caption">
+Figure 15: Primary Navier-Stokes visualization showing velocity streamlines and pressure contours. The solution exhibits physically realistic flow patterns with proper vorticity and pressure gradients.
+</p>
+</div>
+</div>
+<h3 id="physics-validation-beyond-residuals">Physics validation: Beyond residuals</h3>
+<p>Beyond achieving low residuals, we validate that solutions preserve physical structure:</p>
+<p><strong>Divergence and vorticity</strong>: The divergence field confirms incompressibility (<span class="math inline">\(|\nabla \cdot \mathbf{u}| &lt; 10^{-9}\)</span>), while vorticity <span class="math inline">\(\omega = \nabla \times \mathbf{u}\)</span> captures rotational dynamics correctly.</p>
+<p><strong>Energy dissipation</strong>: Kinetic energy decreases over time following viscous dissipation laws, demonstrating proper physics preservation.</p>
+<p><strong>Pressure-velocity correlation</strong>: Pressure gradients correlate correctly with velocity changes (90.56% correlation), maintaining the physical relationship between these quantities.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-4"></span>
+<img src="assets/physics_validation_fields.png" alt="Physics validation: Divergence field (top-left) confirms incompressibility, vorticity field (top-right) shows rotational dynamics, and combined analysis (bottom) validates physical consistency." width="1102" />
+<p class="caption">
+Figure 16: Physics validation: Divergence field (top-left) confirms incompressibility, vorticity field (top-right) shows rotational dynamics, and combined analysis (bottom) validates physical consistency.
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-5"></span>
+<img src="assets/physics_time_evolution.png" alt="Temporal evolution analysis: Energy dissipation (top-left), pressure-velocity correlation (top-right), velocity components (bottom-left), and pressure derivatives (bottom-right) all demonstrate physically consistent behavior over time." width="1117" />
+<p class="caption">
+Figure 17: Temporal evolution analysis: Energy dissipation (top-left), pressure-velocity correlation (top-right), velocity components (bottom-left), and pressure derivatives (bottom-right) all demonstrate physically consistent behavior over time.
+</p>
+</div>
+</div>
+<h2 id="training-dynamics-and-stability">Training dynamics and stability</h2>
+<h3 id="convergence-analysis">Convergence analysis</h3>
+<p>Training with multiplicative constraints exhibits stable convergence without gradient explosion, even for long unrolled simulations. The key factors contributing to stability are:</p>
+<ol type="1">
+<li><strong>Gradient direction preservation</strong>: Multiplicative scaling doesn’t create conflicting gradient signals</li>
+<li><strong>Smooth constraint factors</strong>: Euler gates provide smooth transitions between constraint regimes</li>
+<li><strong>Bounded amplification</strong>: Exponential barriers are clamped to prevent numerical overflow</li>
+</ol>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:training-curves"></span>
+<img src="article_files/figure-html5/training-curves-1.png" alt="Simulated training curves comparing additive vs multiplicative constraint enforcement. Multiplicative methods show stable convergence while additive methods exhibit instability." width="960" />
+<p class="caption">
+Figure 18: Simulated training curves comparing additive vs multiplicative constraint enforcement. Multiplicative methods show stable convergence while additive methods exhibit instability.
+</p>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<img src="assets/3d_les_training_curves.png" alt="Training dynamics from 3D large eddy simulation experiments. The curves show stable convergence without gradient explosion, even for extended training periods." width="1116" />
+<p class="caption">
+Figure 19: Training dynamics from 3D large eddy simulation experiments. The curves show stable convergence without gradient explosion, even for extended training periods.
+</p>
+</div>
+</div>
+<h3 id="robustness-across-random-seeds">Robustness across random seeds</h3>
+<p>We validated robustness by training with five different random seeds (42, 123, 456, 789, 321). Results show consistent performance:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:seed-robustness"></span>
+<img src="article_files/figure-html5/seed-robustness-1.png" alt="Robustness validation across 5 random seeds. The low variance demonstrates reliable, reproducible training dynamics." width="960" />
+<p class="caption">
+Figure 20: Robustness validation across 5 random seeds. The low variance demonstrates reliable, reproducible training dynamics.
+</p>
+</div>
+</div>
+<p>The low variance demonstrates that multiplicative constraints provide reliable, reproducible training dynamics.</p>
+<h3 id="scalability-analysis">Scalability analysis</h3>
+<p>Performance scales gracefully with problem size:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:scalability"></span>
+<img src="article_files/figure-html5/scalability-1.png" alt="Scalability analysis: per-point processing time remains nearly constant as grid size increases, demonstrating excellent scalability." width="960" />
+<p class="caption">
+Figure 21: Scalability analysis: per-point processing time remains nearly constant as grid size increases, demonstrating excellent scalability.
+</p>
+</div>
+</div>
+<p>Even at 100×100 resolution, the framework maintains near-constant per-point processing time, demonstrating excellent scalability.</p>
+<h2 id="implementation-details">Implementation details</h2>
+<h3 id="architecture-design">Architecture design</h3>
+<p>The neural network architecture for Navier-Stokes uses:
+- <strong>Input</strong>: Spatial coordinates <span class="math inline">\((x, y)\)</span> and time <span class="math inline">\(t\)</span>
+- <strong>Output</strong>: Streamfunction <span class="math inline">\(\psi\)</span> and pressure <span class="math inline">\(p\)</span>
+- <strong>Architecture</strong>: Multi-layer perceptron with 4-5 hidden layers, 64-128 neurons per layer
+- <strong>Activation</strong>: Swish/SiLU for smooth gradients
+- <strong>Total parameters</strong>: ~33,539 (compact and efficient)</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="figure"><span style="display:block;" id="fig:architecture-diagram"></span>
+<img src="article_files/figure-html5/architecture-diagram-1.png" alt="Neural network architecture for Navier-Stokes: inputs (x, y, t) → hidden layers → outputs (ψ, p) → derived velocities (u, v) via autodiff." width="960" />
+<p class="caption">
+Figure 22: Neural network architecture for Navier-Stokes: inputs (x, y, t) → hidden layers → outputs (ψ, p) → derived velocities (u, v) via autodiff.
+</p>
+</div>
+</div>
+<h3 id="training-procedure">Training procedure</h3>
+<ol type="1">
+<li><strong>Data sampling</strong>: Collocation points sampled uniformly from domain</li>
+<li><strong>Loss computation</strong>: Multiplicative constraint loss with Euler gates and exponential barriers</li>
+<li><strong>Optimization</strong>: Adam optimizer with learning rate 1e-3 to 1e-4</li>
+<li><strong>Constraint weighting</strong>: Prime-based weights <span class="math inline">\(w_i = (1 + \log p_i)^{-\alpha}\)</span> with <span class="math inline">\(\alpha = 1.0\)</span></li>
+</ol>
+<h3 id="hyperparameter-settings">Hyperparameter settings</h3>
+<ul>
+<li><strong>Gate sharpness</strong>: <span class="math inline">\(\tau = 3.0\)</span> (controls Euler gate decay rate)</li>
+<li><strong>Barrier sharpness</strong>: <span class="math inline">\(\gamma = 5.0\)</span> (controls exponential barrier growth)</li>
+<li><strong>Prime set</strong>: <span class="math inline">\(\mathcal{P} = \{2, 3, 5, 7, 11\}\)</span> (first five primes)</li>
+<li><strong>Clamping bounds</strong>: <span class="math inline">\([\epsilon, M] = [10^{-6}, 10^6]\)</span> (prevents numerical issues)</li>
+</ul>
+<p>These settings were found to work well across multiple problem types, though fine-tuning can improve performance for specific applications.</p>
+<h2 id="applications-and-impact">Applications and impact</h2>
+<h3 id="engineering-applications">Engineering applications</h3>
+<p><strong>Real-time aerodynamics</strong>: Aircraft design with instant feedback on aerodynamic properties, enabling rapid iteration cycles.</p>
+<p><strong>Interactive CFD</strong>: Automotive and aerospace industries can use real-time fluid simulation for design optimization.</p>
+<p><strong>Turbine optimization</strong>: Wind and hydroelectric turbine design with instant efficiency feedback.</p>
+<h3 id="scientific-computing">Scientific computing</h3>
+<p><strong>Climate modeling</strong>: High-resolution climate simulations with real-time updates for policy decisions.</p>
+<p><strong>Weather prediction</strong>: Fast, accurate weather forecasting with physics-informed neural networks.</p>
+<p><strong>Biomedical flows</strong>: Surgical planning with real-time blood flow simulation.</p>
+<h3 id="autonomous-systems">Autonomous systems</h3>
+<p><strong>Underwater navigation</strong>: Drones with real-time flow awareness for efficient path planning.</p>
+<p><strong>Aircraft control</strong>: Real-time aerodynamic response for flight control systems.</p>
+<p><strong>Manufacturing</strong>: Process flow optimization with guaranteed physics constraints.</p>
+<h2 id="limitations-and-future-directions">Limitations and future directions</h2>
+<h3 id="current-limitations">Current limitations</h3>
+<ol type="1">
+<li><p><strong>Hardware validation</strong>: Benchmarks reported on specific hardware; broader cross-platform validation needed.</p></li>
+<li><p><strong>Theoretical foundations</strong>: The superconducting analogy is conceptual; formal theoretical analysis of convergence and optimality would strengthen the framework.</p></li>
+<li><p><strong>Baseline comparisons</strong>: While we compare against additive PINNs, comparisons with other constraint enforcement methods (e.g., augmented Lagrangian, interior point methods) would provide broader context.</p></li>
+<li><p><strong>PDE family coverage</strong>: While validated on Navier-Stokes, Poisson, and heat equations, broader validation across PDE families (e.g., wave equations, Schrödinger equations) is ongoing.</p></li>
+</ol>
+<h3 id="future-research-directions">Future research directions</h3>
+<p><strong>Theoretical advances</strong>:
+- Formal convergence analysis for multiplicative constraints
+- Optimal prime selection strategies
+- Connection to optimal transport and Wasserstein distances</p>
+<p><strong>Methodological improvements</strong>:
+- Adaptive constraint weighting based on violation severity
+- Hierarchical constraint decomposition for complex systems
+- Integration with uncertainty quantification</p>
+<p><strong>Applications</strong>:
+- Multi-physics coupling (fluid-structure interaction, magnetohydrodynamics)
+- High-dimensional PDEs (4D+ spatiotemporal systems)
+- Real-time deployment on embedded systems (FPGAs, edge devices)</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>Multiplicative constraints represent a paradigm shift in physics-informed machine learning. By replacing additive penalties with multiplicative scaling, we preserve gradient directions while enabling stable, efficient constraint enforcement.</p>
+<h3 id="key-contributions">Key contributions</h3>
+<ol type="1">
+<li><p><strong>Theoretical foundation</strong>: Mathematical analysis showing why multiplicative constraints preserve gradient directions and avoid conflicts.</p></li>
+<li><p><strong>Prime-weighted hierarchy</strong>: Euler product gates create structured constraint enforcement with natural hierarchy.</p></li>
+<li><p><strong>Multi-constraint compatibility</strong>: First framework to successfully enforce multiple simultaneous constraints without gradient conflicts.</p></li>
+<li><p><strong>Real-time Navier-Stokes</strong>: Breakthrough performance enabling real-time fluid simulation with physics accuracy.</p></li>
+<li><p><strong>Superconducting analogy</strong>: Conceptual framework connecting constraint satisfaction to phase coherence phenomena.</p></li>
+</ol>
+<h3 id="broader-implications">Broader implications</h3>
+<p>The multiplicative constraint framework opens new possibilities for:
+- <strong>Reliable AI systems</strong>: Safety-critical applications requiring guaranteed constraint satisfaction
+- <strong>Real-time simulation</strong>: Interactive design and control systems with instant physics feedback<br />
+- <strong>Scientific discovery</strong>: Fast exploration of parameter spaces with physics guarantees
+- <strong>Democratized simulation</strong>: Making high-fidelity physics simulation accessible to broader communities</p>
+<p>As physics-informed machine learning continues to mature, multiplicative constraints provide a robust foundation for building reliable, efficient, and scalable systems that respect physical laws while achieving unprecedented performance.</p>
+<hr />
+<p><strong>Acknowledgments</strong>: This work builds on foundational research in physics-informed neural networks <span class="citation" data-cites="raissi2019">(<a href="#ref-raissi2019" role="doc-biblioref">Raissi, Perdikaris, and Karniadakis 2019</a>)</span>, gradient pathology analysis <span class="citation" data-cites="wang2021">(<a href="#ref-wang2021" role="doc-biblioref">Wang, Yu, and Perdikaris 2021</a>)</span>, spectral graph theory <span class="citation" data-cites="chung1997">(<a href="#ref-chung1997" role="doc-biblioref">Chung 1997</a>)</span>, and connections between number theory and statistical mechanics <span class="citation" data-cites="bostconnes1995 bardeen1957">(<a href="#ref-bostconnes1995" role="doc-biblioref">Bost and Connes 1995</a>; <a href="#ref-bardeen1957" role="doc-biblioref">Bardeen, Cooper, and Schrieffer 1957</a>)</span>.</p>
+<hr />
+<section id="code-citation" class="l-body-outset" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 24px; border-radius: 8px; margin-top: 32px; border-left: 4px solid #6c5ce7;">
+<h3>Code &amp; Citation</h3>
+<p><strong>Source Code</strong>: The complete implementation is available on GitHub at <a href="https://github.com/sethuiyer/multiplicative-pinn-framework" class="uri">https://github.com/sethuiyer/multiplicative-pinn-framework</a></p>
+<p><strong>If this work helped your research</strong>, please consider citing:</p>
+<div style="background: white; padding: 16px; border-radius: 4px; font-family: monospace; font-size: 13px; margin-top: 12px;">
+<p>Sethurathienam Iyer (2025). “ShunyaBar: Spectral–Arithmetic Phase Transitions for Combinatorial Optimization”. Zenodo. <a href="doi:%5B10.5281/zenodo.18214172" class="uri">doi:[10.5281/zenodo.18214172</a>](<a href="https://doi.org/10.5281/zenodo.18214172" class="uri">https://doi.org/10.5281/zenodo.18214172</a>)</p>
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bibtex"><code class="sourceCode bibtex"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">@software{iyer2025shunyabar,</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">  author       = {Sethurathienam Iyer},</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">  title        = {{ShunyaBar: Spectral–Arithmetic Phase Transitions </span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">                   for Combinatorial Optimization}},</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">  year         = 2025,</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">  publisher    = {Zenodo},</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">  doi          = {10.5281/zenodo.18214172},</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">  url          = {https://doi.org/10.5281/zenodo.18214172}</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span></code></pre></div>
+</section>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-bardeen1957" class="csl-entry" role="listitem">
+Bardeen, John, Leon N. Cooper, and J. Robert Schrieffer. 1957. <span>“Theory of Superconductivity.”</span> <em>Physical Review</em> 108 (5): 1175–1204. <a href="https://doi.org/10.1103/PhysRev.108.1175">https://doi.org/10.1103/PhysRev.108.1175</a>.
+</div>
+<div id="ref-bostconnes1995" class="csl-entry" role="listitem">
+Bost, Jean-Benoît, and Alain Connes. 1995. <span>“Hecke Algebras, Type III Factors and Phase Transitions with Spontaneous Symmetry Breaking in Number Theory.”</span> <em>Selecta Mathematica</em> 1 (3): 411–57. <a href="https://doi.org/10.1007/BF01588095">https://doi.org/10.1007/BF01588095</a>.
+</div>
+<div id="ref-chung1997" class="csl-entry" role="listitem">
+Chung, Fan R. K. 1997. <em>Spectral Graph Theory</em>. Vol. 92. CBMS Regional Conference Series in Mathematics. American Mathematical Society.
+</div>
+<div id="ref-raissi2019" class="csl-entry" role="listitem">
+Raissi, Maziar, Paris Perdikaris, and George E. Karniadakis. 2019. <span>“Physics-Informed Neural Networks: A Deep Learning Framework for Solving Forward and Inverse Problems Involving Nonlinear Partial Differential Equations.”</span> <em>Journal of Computational Physics</em> 378: 686–707. <a href="https://doi.org/10.1016/j.jcp.2018.10.045">https://doi.org/10.1016/j.jcp.2018.10.045</a>.
+</div>
+<div id="ref-wang2021" class="csl-entry" role="listitem">
+Wang, Sifan, Xin Yu, and Paris Perdikaris. 2021. <span>“Understanding and Mitigating Gradient Pathologies in Physics-Informed Neural Networks.”</span> <em>SIAM Journal on Scientific Computing</em> 43 (5): A3055–81. <a href="https://doi.org/10.1137/20M1318043">https://doi.org/10.1137/20M1318043</a>.
+</div>
+</div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom">
+<h3 id="references">References</h3>
+<div id="references-listing"></div>
+<h3 id="updates-and-corrections">Corrections</h3>
+<p>If you see mistakes or want to suggest changes, please <a href="https://github.com/sethuiyer/multiplicative-pinn-framework/issues/new">create an issue</a> on the source repository.</p>
+</div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
